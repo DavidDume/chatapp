@@ -14,7 +14,7 @@ class ChatController extends Controller
         return ChatRoom::all();
     }
 
-    public function message(Request $request, $roomId)
+    public function messages(Request $request, $roomId)
     {
         return ChatMessage::where('chat_room_id', $roomId)->with('user')->orderBy('created_at', 'DESC')->get();
     }
