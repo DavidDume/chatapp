@@ -41,9 +41,13 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/chat', function () {
-        return Inertia::render('Chat/container');
+        return Inertia::render('container');
     })->name('chat');
 });
+
+/*Route::middleware(['auth:sanctum', 'verified'])->get('/chat', function () {
+    return Inertia\Inertia::render('Chat/container');
+})->name('chat');*/
 
 Route::middleware('auth:sanctum')->get('/chat/rooms', [ChatController::class, 'rooms']);
 Route::middleware('auth:sanctum')->get('/chat/room/{roomId}/messages', [ChatController::class, 'messages']);
