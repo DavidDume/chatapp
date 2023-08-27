@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import messageContainer from './Chat/messageContainer.vue';
 import inputMessage from './Chat/inputMessage.vue';
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import ChatRoomSelection from './Chat/chatRoomSelection.vue';
 
 
@@ -33,12 +33,31 @@ export default {
             console.log(room);
             getMessages()
         };
+        watch(currentRoom, (val, oldVal) => {
+            if(oldVal.id) {
+                disconnect(oldVal)
+            }
+            connect()
+        })
+        const connect = () => {
+            if(currentRoom.value.id) {
+                let vm = this;
+                getMessages()
+                window.Echo.private("chat." + currentRoom.value.id).listen('.message.new', e => {
+                    vm.getMessages()
+                })
+            }
+        }
+        const disconnect = (room) => {
+            window.Echo.leave('chat.' + room.id)
+        }
         getRooms();
         return {
             chatRooms,
             currentRoom,
             messages,
-            setRoom
+            setRoom,
+            connect
         };
     },
     components: { messageContainer, inputMessage, AppLayout, ChatRoomSelection }
