@@ -30,13 +30,15 @@ export default {
         };
         const setRoom = (room) => {
             currentRoom.value = room;
+            console.log(room);
             getMessages()
         };
         getRooms();
         return {
             chatRooms,
             currentRoom,
-            messages
+            messages,
+            setRoom
         };
     },
     components: { messageContainer, inputMessage, AppLayout, ChatRoomSelection }
@@ -47,7 +49,7 @@ export default {
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                <ChatRoomSelection v-if="currentRoom.id" :rooms="chatRooms" :currentRoom="currentRoom" v-on:roomChange="setRoom($event)"></ChatRoomSelection>
+                <ChatRoomSelection v-if="currentRoom.id" :rooms="chatRooms" :currentRoom="currentRoom" v-on:roomchanged="setRoom($event)"></ChatRoomSelection>
             </h2>
         </template>
 

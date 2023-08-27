@@ -4,7 +4,7 @@
             {{ selected.name }} Chat
         </div>
         <div>
-            <select name="" v-model="selected" @change="$emit('roomChanged', selected)" class="float-right" id="">
+            <select name="" v-model="selected" @change="$emit('roomchanged', selected)" class="float-right" id="">
                 <option :value="room" v-for="(room, index) in rooms" :key="index" >{{ room.name }}</option>
             </select>
         </div>
